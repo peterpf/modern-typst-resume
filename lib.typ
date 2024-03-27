@@ -34,11 +34,6 @@
     )
 }
 
-// Use this method for icons in links to adjust their size.
-#let linkIcon(..args) = {
-  icon(..args, width: 1.25em / 2, baseline: 0.125em * 3)
-}
-
 #let infoItem(iconName, msg) = {
   text(colors.textTertiary, [#icon(iconName, baseline: 0.25em) #msg])
 }
@@ -243,10 +238,15 @@
     ]
   }
 
+  // A typical icon for outbound links. Use for hyperlinks.
+  let linkIcon(..args) = {
+    icon("arrow-up-right-from-square", ..args, width: 1.25em / 2, baseline: 0.125em * 3)
+  }
+
   // Header
   {
     show link: it => [
-      #it #linkIcon("arrow-up-right-from-square")
+      #it #linkIcon()
     ]
     header(author, job-title, bio: bio, avatar: avatar, contact-options: contact-options)
   }
@@ -254,7 +254,7 @@
   // Main content
   {
     show link: it => [
-      #it #linkIcon("arrow-up-right-from-square", color: colors.accentColor)
+      #it #linkIcon(color: colors.accentColor)
     ]
     pad(
       left: pageMargin,
