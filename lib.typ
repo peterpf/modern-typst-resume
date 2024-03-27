@@ -90,18 +90,19 @@
   )
 }
 
-#let header(data) = {
+#let header(author, job-title, bio: none, avatar: none, contact-options: ()) = {
+  let avatarImagePath = ""
+  if avatar != none {
+    avatarImagePath = avatar
+  }
   grid(
     columns: 1,
     rows: (auto, auto),
     headerRibbon(
       colors.primary,
-      headline(data.name, data.jobTitle, data.at("bio", default: ""), imagepath: data.at("avatarImagePath", default: ""))
+      headline(author, job-title, bio, imagepath: avatarImagePath)
     ),
-    headerRibbon(
-      colors.secondary,
-      contactDetails(data.at("contactOptions", default: ()))
-    )
+    headerRibbon(colors.secondary, contactDetails(contact-options))
   )
 }
 
@@ -171,8 +172,31 @@
 }
 
 
-#let modern-resume(data, body) = {
-  // Configuration
+#let modern-resume(
+  // The person's full name as a string.
+  author: "John Doe",
+
+  // A short description of your profession.
+  job-title: [Data Scientist],
+
+  // A short description about your background/experience/skills, or none.
+  bio: none,
+  // A avatar that is pictures in the top-right corner of the resume, or none.
+  avatar: none,
+
+  // A list of contact options.
+  contact-options: (),
+
+  // The resume's content.
+  body
+) = {
+  // Set document metadata.
+  set document(title: "Resume of " + author, author: author)
+
+  // Set the body font.
+  set text(font: "Roboto", size: textSize.normal)
+
+  // Configure the page.
   set page(
     paper: "a4",
     margin: (
@@ -182,12 +206,11 @@
       bottom: 1cm,
     ),
   )
-  set text(
-    font: "Roboto",
-    size: textSize.normal,
-  )
+
+  // Set the marker color for lists.
   set list(marker: (text(colors.accentColor)[•], text(colors.accentColor)[--]))
 
+  // Set the heading.
   show heading: it => {
     set text(colors.accentColor)
     pad(bottom: 0.5em)[
@@ -202,8 +225,9 @@
     show link: it => [
       #it #linkIcon("arrow-up-right-from-square")
     ]
-    header(data)
+    header(author, job-title, bio: bio, avatar: avatar, contact-options: contact-options)
   }
+
   // Main content
   {
     show link: it => [
