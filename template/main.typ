@@ -1,10 +1,10 @@
-#import "modern-resume.typ": modern-resume, workExperience, educationalExperience, project, pill
+#import "@preview/modern-resume:0.1.0": modern-resume, workExperience, educationalExperience, project, pill
 
 #let data = (
   name: "John Doe",
   jobTitle: "Data Scientist",
   bio: lorem(5),                  // Optional parameter
-  avatarImagePath: "template/avatar.png",  // Optional parameter
+  avatarImagePath: "avatar.png",  // Optional parameter
   contactOptions: (               // Optional parameter, all entries are optional
     email: link("mailto:john.doe@gmail.com")[john.doe\@gmail.com],
     mobile: "+43 1234 5678",
