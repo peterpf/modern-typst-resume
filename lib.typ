@@ -1,5 +1,3 @@
-#import "icons.typ": icon, linkIcon
-
 #let colors = (
   primary: rgb("#313C4E"),
   secondary: rgb("#222A33"),
@@ -15,6 +13,31 @@
   normal: 11pt,
   small: 9pt,
 )
+
+// Load an icon by 'name' and set its color.
+#let icon(
+  name,
+  color: white,
+  baseline: 0.125em,
+  height: 1.0em,
+  width: 1.25em) = {
+    let originalImage = read("icons/" + name + ".svg")
+    let colorizedImage = originalImage.replace(
+      "#ffffff",
+      color.to-hex(),
+    )
+    box(
+      baseline: baseline,
+      height: height,
+      width: width,
+      image.decode(colorizedImage)
+    )
+}
+
+// Use this method for icons in links to adjust their size.
+#let linkIcon(..args) = {
+  icon(..args, width: 1.25em / 2, baseline: 0.125em * 3)
+}
 
 #let infoItem(iconName, msg) = {
   text(colors.textTertiary, [#icon(iconName, baseline: 0.25em) #msg])
