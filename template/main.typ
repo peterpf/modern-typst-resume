@@ -1,3 +1,5 @@
+#import "@local/modern-resume:0.1.0": modern-resume, workExperience, educationalExperience, project, pill
+
 #show: modern-resume.with(
   author: "John Doe",
   job-title: "Data Scientist",
