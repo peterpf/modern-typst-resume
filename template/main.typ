@@ -1,11 +1,11 @@
-#import "modern-resume.typ": modern-resume, workExperience, educationalExperience, project, pill
+#import "@preview/modern-resume:0.1.0": modern-resume, workExperience, educationalExperience, project, pill
 
-#let data = (
-  name: "John Doe",
-  jobTitle: "Data Scientist",
-  bio: lorem(5),                  // Optional parameter
-  avatarImagePath: "avatar.png",  // Optional parameter
-  contactOptions: (               // Optional parameter, all entries are optional
+#show: modern-resume.with(
+  author: "John Doe",
+  job-title: "Data Scientist",
+  bio: lorem(5),
+  avatar: image("avatar.png"),
+  contact-options: (
     email: link("mailto:john.doe@gmail.com")[john.doe\@gmail.com],
     mobile: "+43 1234 5678",
     location: "Austria",
@@ -14,8 +14,6 @@
     website: link("https://jdoe.dev")[jdoe.dev],
   ),
 )
-
-#show: doc => modern-resume(data, doc)
 
 == Education
 

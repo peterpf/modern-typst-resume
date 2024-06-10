@@ -1,5 +1,3 @@
-#import "icons.typ": icon, linkIcon
-
 #let colors = (
   primary: rgb("#313C4E"),
   secondary: rgb("#222A33"),
@@ -16,21 +14,63 @@
   small: 9pt,
 )
 
+// assets contains the base paths to folders for icons, images, ...
+#let assets = (
+  icons: "assets/icons"
+)
+
+// joinPath joins the arguments to a valid system path.
+#let joinPath(..parts) = {
+  let path = ""
+  let pathSeparator = "/"
+  for part in parts.pos() {
+    if part.at(part.len() - 1) == pathSeparator {
+      path += part
+    } else {
+      path += part + pathSeparator
+    }
+  }
+  return path
+}
+
+// Load an icon by 'name' and set its color.
+#let icon(
+  name,
+  color: white,
+  baseline: 0.125em,
+  height: 1.0em,
+  width: 1.25em) = {
+    let svgFilename = name + ".svg"
+    let svgFilepath = joinPath(assets.icons, svgFilename)
+    let originalImage = read(svgFilepath)
+    let colorizedImage = originalImage.replace(
+      "#ffffff",
+      color.to-hex(),
+    )
+    box(
+      baseline: baseline,
+      height: height,
+      width: width,
+      image.decode(colorizedImage)
+    )
+}
+
 #let infoItem(iconName, msg) = {
   text(colors.textTertiary, [#icon(iconName, baseline: 0.25em) #msg])
 }
 
-#let circularAvatarImage(imagepath) = {
+#let circularAvatarImage(img) = {
   block(
     radius: 50%,
     clip: true,
-    stroke: 4pt + colors.accentColor
+    stroke: 4pt + colors.accentColor,
+    width: 2cm
   )[
-    #image(imagepath, width: 2cm)
+    #img
   ]
 }
 
-#let headline(name, title, bio, imagepath: "") = {
+#let headline(name, title, bio, avatar: none) = {
   grid(
     columns: (1fr, auto),
     align(bottom)[
@@ -38,8 +78,8 @@
       #text(colors.accentColor, title)\
       #text(colors.textTertiary, bio)
     ],
-    if imagepath != "" {
-      circularAvatarImage(imagepath)
+    if avatar != none {
+      circularAvatarImage(avatar)
     }
   )
 }
@@ -90,18 +130,15 @@
   )
 }
 
-#let header(data) = {
+#let header(author, job-title, bio: none, avatar: none, contact-options: ()) = {
   grid(
     columns: 1,
     rows: (auto, auto),
     headerRibbon(
       colors.primary,
-      headline(data.name, data.jobTitle, data.at("bio", default: ""), imagepath: data.at("avatarImagePath", default: ""))
+      headline(author, job-title, bio, avatar: avatar)
     ),
-    headerRibbon(
-      colors.secondary,
-      contactDetails(data.at("contactOptions", default: ()))
-    )
+    headerRibbon(colors.secondary, contactDetails(contact-options))
   )
 }
 
@@ -171,8 +208,31 @@
 }
 
 
-#let modern-resume(data, body) = {
-  // Configuration
+#let modern-resume(
+  // The person's full name as a string.
+  author: "John Doe",
+
+  // A short description of your profession.
+  job-title: [Data Scientist],
+
+  // A short description about your background/experience/skills, or none.
+  bio: none,
+  // A avatar that is pictures in the top-right corner of the resume, or none.
+  avatar: none,
+
+  // A list of contact options, defaults to an empty set.
+  contact-options: (),
+
+  // The resume's content.
+  body
+) = {
+  // Set document metadata.
+  set document(title: "Resume of " + author, author: author)
+
+  // Set the body font.
+  set text(font: "Roboto", size: textSize.normal)
+
+  // Configure the page.
   set page(
     paper: "a4",
     margin: (
@@ -182,12 +242,11 @@
       bottom: 1cm,
     ),
   )
-  set text(
-    font: "Roboto",
-    size: textSize.normal,
-  )
+
+  // Set the marker color for lists.
   set list(marker: (text(colors.accentColor)[•], text(colors.accentColor)[--]))
 
+  // Set the heading.
   show heading: it => {
     set text(colors.accentColor)
     pad(bottom: 0.5em)[
@@ -197,17 +256,23 @@
     ]
   }
 
+  // A typical icon for outbound links. Use for hyperlinks.
+  let linkIcon(..args) = {
+    icon("arrow-up-right-from-square", ..args, width: 1.25em / 2, baseline: 0.125em * 3)
+  }
+
   // Header
   {
     show link: it => [
-      #it #linkIcon("arrow-up-right-from-square")
+      #it #linkIcon()
     ]
-    header(data)
+    header(author, job-title, bio: bio, avatar: avatar, contact-options: contact-options)
   }
+
   // Main content
   {
     show link: it => [
-      #it #linkIcon("arrow-up-right-from-square", color: colors.accentColor)
+      #it #linkIcon(color: colors.accentColor)
     ]
     pad(
       left: pageMargin,
