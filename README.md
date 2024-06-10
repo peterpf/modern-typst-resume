@@ -2,7 +2,6 @@
 
 [![Build Typst document](https://github.com/peterpf/modern-typst-resume/actions/workflows/build.yaml/badge.svg)](https://github.com/peterpf/modern-typst-resume/actions/workflows/build.yaml)
 
-![Cover](docs/images/cover.png)
 
 ## Requirements
 
