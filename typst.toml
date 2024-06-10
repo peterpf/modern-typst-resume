@@ -1,5 +1,5 @@
 [package]
-name = "modern-typst-resume"
+name = "modern-resume"
 version = "0.1.0"
 entrypoint = "lib.typ"
 authors = ["Peter Egger <@peterpf>"]
