@@ -223,7 +223,7 @@
   // A avatar that is pictures in the top-right corner of the resume, or none.
   avatar: none,
 
-  // A list of contact options.
+  // A list of contact options, defaults to an empty set.
   contact-options: (),
 
   // The resume's content.
