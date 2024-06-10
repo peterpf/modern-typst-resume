@@ -37,7 +37,7 @@ The following code provides a minimum working example:
   author: "John Doe",           // Optional parameter
   job-title: "Data Scientist",  // Optional parameter
   bio: lorem(5),                // Optional parameter
-  avatar: "avatar.png",         // Optional parameter
+  avatar: image("avatar.png"),  // Optional parameter
   contact-options: (            // All entries are optional
     email: link("mailto:john.doe@gmail.com")[john.doe\@gmail.com],
     mobile: "+43 1234 5678",

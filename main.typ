@@ -4,7 +4,7 @@
   author: "John Doe",
   job-title: "Data Scientist",
   bio: lorem(5),
-  avatar: "template/avatar.png",
+  avatar: image("template/avatar.png"),
   contact-options: (
     email: link("mailto:john.doe@gmail.com")[john.doe\@gmail.com],
     mobile: "+43 1234 5678",

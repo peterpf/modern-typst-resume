@@ -59,17 +59,18 @@
   text(colors.textTertiary, [#icon(iconName, baseline: 0.25em) #msg])
 }
 
-#let circularAvatarImage(imagepath) = {
+#let circularAvatarImage(img) = {
   block(
     radius: 50%,
     clip: true,
-    stroke: 4pt + colors.accentColor
+    stroke: 4pt + colors.accentColor,
+    width: 2cm
   )[
-    #image(imagepath, width: 2cm)
+    #img
   ]
 }
 
-#let headline(name, title, bio, imagepath: "") = {
+#let headline(name, title, bio, avatar: none) = {
   grid(
     columns: (1fr, auto),
     align(bottom)[
@@ -77,8 +78,8 @@
       #text(colors.accentColor, title)\
       #text(colors.textTertiary, bio)
     ],
-    if imagepath != "" {
-      circularAvatarImage(imagepath)
+    if avatar != none {
+      circularAvatarImage(avatar)
     }
   )
 }
@@ -130,16 +131,12 @@
 }
 
 #let header(author, job-title, bio: none, avatar: none, contact-options: ()) = {
-  let avatarImagePath = ""
-  if avatar != none {
-    avatarImagePath = avatar
-  }
   grid(
     columns: 1,
     rows: (auto, auto),
     headerRibbon(
       colors.primary,
-      headline(author, job-title, bio, imagepath: avatarImagePath)
+      headline(author, job-title, bio, avatar: avatar)
     ),
     headerRibbon(colors.secondary, contactDetails(contact-options))
   )
