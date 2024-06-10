@@ -1,7 +1,9 @@
 # A modern typst CV template
 
+[![say thanks](https://img.shields.io/badge/Say%20Thanks-👍-1EAEDB.svg)](https://github.com/peterpf/modern-typst-resume/stargazers)
 [![Build Typst document](https://github.com/peterpf/modern-typst-resume/actions/workflows/build.yaml/badge.svg)](https://github.com/peterpf/modern-typst-resume/actions/workflows/build.yaml)
 
+A customizable resume/CV template focusing on clean and concise presentation, with a touch of color.
 
 ## Requirements
 
