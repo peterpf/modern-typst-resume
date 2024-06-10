@@ -72,7 +72,7 @@ Example outputs for different color palettes:
 
 | Default colors | Pink colors |
 |:----------------:|:-------------:|
-|![Default colors](./docs/images/navy-dark.png) | ![Pink colors](./docs/images/pink.png)|
+|![Default colors](./docs/images/demo-navy-dark.png) | ![Pink colors](./docs/images/demo-pink.png)|
 
 
 
