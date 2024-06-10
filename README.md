@@ -31,7 +31,7 @@ typst watch main.typ
 The following code provides a minimum working example:
 
 ```typst
-#import "modern-resume.typ": modern-resume
+#import "@preview/modern-resume": *
 
 #show: modern-resume.with(
   author: "John Doe",           // Optional parameter
