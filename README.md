@@ -12,7 +12,15 @@ To compile this project you need the following:
 - Typst
 - Roboto font family
 
-Run the following command to build the typst file whenever saving changes
+## Compiling
+
+Build the document once with
+
+```bash
+typst compile main.typ
+```
+
+Build the document whenever you save changes by running
 
 ```bash
 typst watch main.typ
@@ -178,3 +186,9 @@ Import this element from the template module with `project`.
 ## Contributing
 
 I'm grateful for any improvements and suggestions.
+
+## Acknowledgements
+
+This project would not be what it is without:
+
+- [Font Awesome Free](https://github.com/FortAwesome/Font-Awesome/) | providing the icons
