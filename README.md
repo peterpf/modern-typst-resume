@@ -78,6 +78,8 @@ Example outputs for different color palettes:
 
 ## Customization
 
+Note: customization is currently only supported when cloning the template locally. Allowing customization via "Typst universe"-installed is a feature that is actively worked on.
+
 The template allows you to make it yours by defining a custom color palette.
 Customize the color theme by changing the values of the `color` dictionary in [lib.typ](lib.typ). For example:
 
