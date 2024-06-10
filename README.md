@@ -18,19 +18,17 @@ typst watch main.typ
 
 ## Usage
 
-This is a typst template that provides the general page style and several elements out-of-the-box.
-
 The following code provides a minimum working example:
 
 ```typst
 #import "modern-resume.typ": modern-resume
 
-#let data = (
-  name: "John Doe",
-  jobTitle: "Data Scientist",
-  bio: lorem(5),                  // Optional parameter
-  avatarImagePath: "avatar.png",  // Optional parameter
-  contactOptions: (               // Optional parameter, all entries are optional
+#show: modern-resume.with(
+  author: "John Doe",           // Optional parameter
+  job-title: "Data Scientist",  // Optional parameter
+  bio: lorem(5),                // Optional parameter
+  avatar: "avatar.png",         // Optional parameter
+  contact-options: (            // All entries are optional
     email: link("mailto:john.doe@gmail.com")[john.doe\@gmail.com],
     mobile: "+43 1234 5678",
     location: "Austria",
@@ -40,18 +38,71 @@ The following code provides a minimum working example:
   ),
 )
 
-#show: doc => modern-resume(data, doc)
+== Education
 
-// Your content goes here
+#educationalExperience(
+  title: "Master's degree",
+  subtitle: "University of Sciences",
+  taskDescription: [
+    - Short summary of the most important courses
+    - Explanation of master thesis topic
+  ],
+  dateFrom: "10/2021",
+  dateTo: "07/2023",
+)
+
+// More content goes here
+
 ```
 
 See [main.typ](./main.typ) for a full example that showcases all available elements.
 
-### Elements
+## Output examples
+
+Example outputs for different color palettes:
+
+| Default colors | Pink colors |
+|:----------------:|:-------------:|
+|![Default colors](./docs/images/navy-dark.png) | ![Pink colors](./docs/images/pink.png)|
+
+
+
+## Customization
+
+The template allows you to make it yours by defining a custom color palette.
+Customize the color theme by changing the values of the `color` dictionary in [lib.typ](lib.typ). For example:
+
+- The default color palette:
+
+  ```typst
+  #let colors = (
+    primary: rgb("#313C4E"),
+    secondary: rgb("#222A33"),
+    accentColor: rgb("#449399"),
+    textPrimary: black,
+    textSecondary: rgb("#7C7C7C"),
+    textTertiary: white,
+  )
+  ```
+
+- A pink color palette:
+
+  ```typst
+  #let colors = (
+    primary: rgb("#e755e0"),
+    secondary: rgb("#ad00c2"),
+    accentColor: rgb("#00d032"),
+    textPrimary: black,
+    textSecondary: rgb("#7C7C7C"),
+    textTertiary: white,
+  )
+  ```
+
+## Elements
 
 This section introduces the visual elements that are part of this template.
 
-#### Pills
+### Pills
 
 Import this element from the template module with `pill`.
 
@@ -69,7 +120,7 @@ Import this element from the template module with `pill`.
 #pill("Critical thinking", fill: true)
 ```
 
-#### Educational/work experience
+### Educational/work experience
 
 Import the elements from the template module with `educationalExperience` and `workExperience` respectively.
 
@@ -103,7 +154,7 @@ Import the elements from the template module with `educationalExperience` and `w
 )
 ```
 
-#### Project
+### Project
 
 Import this element from the template module with `project`.
 
@@ -121,36 +172,6 @@ Import this element from the template module with `project`.
   dateTo: "09/2022",
 )
 ```
-
-### Theming
-
-Customize the color theme by changing the values of the `color` dictionary in [modern-resume](modern-resume.typ). For example:
-
-- The default color palette:
-
-  ```typst
-  #let colors = (
-    primary: rgb("#313C4E"),
-    secondary: rgb("#222A33"),
-    accentColor: rgb("#449399"),
-    textPrimary: black,
-    textSecondary: rgb("#7C7C7C"),
-    textTertiary: white,
-  )
-  ```
-
-- A pink color palette:
-
-  ```typst
-  #let colors = (
-    primary: rgb("#e755e0"),
-    secondary: rgb("#ad00c2"),
-    accentColor: rgb("#00d032"),
-    textPrimary: black,
-    textSecondary: rgb("#7C7C7C"),
-    textTertiary: white,
-  )
-  ```
 
 ## Contributing
 
