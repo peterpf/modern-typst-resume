@@ -14,6 +14,25 @@
   small: 9pt,
 )
 
+// assets contains the base paths to folders for icons, images, ...
+#let assets = (
+  icons: "assets/icons"
+)
+
+// joinPath joins the arguments to a valid system path.
+#let joinPath(..parts) = {
+  let path = ""
+  let pathSeparator = "/"
+  for part in parts.pos() {
+    if part.at(part.len() - 1) == pathSeparator {
+      path += part
+    } else {
+      path += part + pathSeparator
+    }
+  }
+  return path
+}
+
 // Load an icon by 'name' and set its color.
 #let icon(
   name,
@@ -21,7 +40,9 @@
   baseline: 0.125em,
   height: 1.0em,
   width: 1.25em) = {
-    let originalImage = read("icons/" + name + ".svg")
+    let svgFilename = name + ".svg"
+    let svgFilepath = joinPath(assets.icons, svgFilename)
+    let originalImage = read(svgFilepath)
     let colorizedImage = originalImage.replace(
       "#ffffff",
       color.to-hex(),
