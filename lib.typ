@@ -1,14 +1,6 @@
-#let colors = (
-  primary: rgb("#313C4E"),
-  secondary: rgb("#222A33"),
-  accentColor: rgb("#449399"),
-  textPrimary: black,
-  textSecondary: rgb("#7C7C7C"),
-  textTertiary: white,
-)
-#let pageMargin = 16pt
-#let textSize = (
-  Large: 24pt,
+#let page-margin = 16pt
+#let text-size = (
+  super-large: 24pt,
   large: 14pt,
   normal: 11pt,
   small: 9pt,
@@ -16,7 +8,8 @@
 
 // assets contains the base paths to folders for icons, images, ...
 #let assets = (
-  icons: "assets/icons"
+  icons: "assets/icons", // path to the icons folder
+  config: "assets/config.yaml", // path to the configuration file
 )
 // load the configuration and parse the color-theme.
 #let config = yaml(assets.config)
@@ -62,15 +55,17 @@
     )
 }
 
+// infoItem returns a content element with an icon followed by text.
 #let infoItem(iconName, msg) = {
-  text(colors.textTertiary, [#icon(iconName, baseline: 0.25em) #msg])
+  text(theme.text-tertiary, [#icon(iconName, baseline: 0.25em) #msg])
 }
 
+// circularAvatarImage returns a rounded image with a border.
 #let circularAvatarImage(img) = {
   block(
     radius: 50%,
     clip: true,
-    stroke: 4pt + colors.accentColor,
+    stroke: 4pt + theme.accentColor,
     width: 2cm
   )[
     #img
@@ -81,9 +76,9 @@
   grid(
     columns: (1fr, auto),
     align(bottom)[
-      #text(colors.textTertiary, name, size: textSize.Large)\
-      #text(colors.accentColor, title)\
-      #text(colors.textTertiary, bio)
+      #text(theme.text-tertiary, name, size: text-size.super-large)\
+      #text(theme.accentColor, title)\
+      #text(theme.text-tertiary, bio)
     ],
     if avatar != none {
       circularAvatarImage(avatar)
@@ -91,8 +86,9 @@
   )
 }
 
-#let contactDetails(contactOptionsDict) = {
-  if contactOptionsDict.len() == 0 {
+// contact-details returns a grid element with neatly organized contact details.
+#let contact-details(contact-options-dict) = {
+  if contact-options-dict.len() == 0 {
     return
   }
   let contactOptionKeyToIconMap = (
@@ -105,8 +101,8 @@
   )
 
   // Evenly distribute the contact options among two columns.
-  let contactOptionDictPairs = contactOptionsDict.pairs()
-  let midIndex = calc.ceil(contactOptionsDict.len() / 2)
+  let contactOptionDictPairs = contact-options-dict.pairs()
+  let midIndex = calc.ceil(contact-options-dict.len() / 2)
   let firstColumnContactOptionsDictPairs = contactOptionDictPairs.slice(0, midIndex)
   let secondColumnContactOptionsDictPairs = contactOptionDictPairs.slice(midIndex)
 
@@ -128,7 +124,7 @@
     width: 100%,
     fill: color,
     inset: (
-      left: pageMargin,
+      left: page-margin,
       right: 8pt,
       top: 8pt,
       bottom: 8pt,
@@ -142,10 +138,10 @@
     columns: 1,
     rows: (auto, auto),
     headerRibbon(
-      colors.primary,
+      theme.primary,
       headline(author, job-title, bio, avatar: avatar)
     ),
-    headerRibbon(colors.secondary, contactDetails(contact-options))
+    headerRibbon(theme.secondary, contact-details(contact-options))
   )
 }
 
@@ -153,13 +149,13 @@
   let content
   if fill {
     content = rect(
-      fill: colors.primary.desaturate(1%),
+      fill: theme.primary.desaturate(1%),
       radius: 15%)[
-        #text(colors.textTertiary)[#msg]
+        #text(theme.text-tertiary)[#msg]
       ]
   } else {
     content = rect(
-      stroke: 1pt + colors.textSecondary.desaturate(1%),
+      stroke: 1pt + theme.text-secondary.desaturate(1%),
       radius: 15%)[#msg]
   }
   [
@@ -170,43 +166,46 @@
 #let experience(
   title: "",
   subtitle: "",
-  facilityDescription: "",
-  taskDescription: "",
-  dateFrom: "Present",
-  dateTo: "Present",
-  taskDescriptionLabel: "Courses") = [
-  #text(size: textSize.large)[*#title*]\
+  facility-description: "",
+  task-description: "",
+  date-from: "Present",
+  date-to: "Present",
+  label: "Courses") = [
+  #text(size: text-size.large)[*#title*]\
   #subtitle\
   #text(style: "italic")[
-    #text(colors.accentColor)[#dateFrom - #dateTo]\
-    #if facilityDescription != "" [
-      #set text(colors.textSecondary)
-      #facilityDescription\
+    #text(theme.accentColor)[#date-from - #date-to]\
+    #if facility-description != "" [
+      #set text(theme.text-secondary)
+      #facility-description\
     ]
-    #text(colors.accentColor)[#taskDescriptionLabel]\
+    #text(theme.accentColor)[#label]\
   ]
-  #taskDescription
+  #task-description
 ]
 
-#let educationalExperience(..args) = {
-  experience(..args, taskDescriptionLabel: "Courses")
+// experience-edu renders a content block for educational experience.
+#let experience-edu(..args) = {
+  experience(..args, label: "Courses")
 }
 
-#let workExperience(..args) = {
-  experience(..args, taskDescriptionLabel: "Achievements/Tasks")
+// experience-work renders a content block for work experience.
+#let experience-work(..args) = {
+  experience(..args, label: "Achievements/Tasks")
 }
 
-#let project(title: "", description: "", subtitle: "", dateFrom: "", dateTo: "") = {
+// project renders a content block for a project.
+#let project(title: "", description: "", subtitle: "", date-from: "", date-to: "") = {
   let date = ""
-  if dateFrom != "" and dateTo != "" {
-    date = text(style: "italic")[(#dateFrom - #dateTo)]
-  } else if dateFrom != "" {
-    date = text(style: "italic")[(#dateFrom)]
+  if date-from != "" and date-to != "" {
+    date = text(style: "italic")[(#date-from - #date-to)]
+  } else if date-from != "" {
+    date = text(style: "italic")[(#date-from)]
   }
 
-  text(size: textSize.large)[#title #date\ ]
+  text(size: text-size.large)[#title #date\ ]
   if subtitle != "" {
-      set text(colors.textSecondary, style: "italic")
+      set text(theme.text-secondary, style: "italic")
       text()[#subtitle\ ]
   }
   if description != "" {
@@ -237,7 +236,7 @@
   set document(title: "Resume of " + author, author: author)
 
   // Set the body font.
-  set text(font: "Roboto", size: textSize.normal)
+  set text(font: "Roboto", size: text-size.normal)
 
   // Configure the page.
   set page(
@@ -251,13 +250,13 @@
   )
 
   // Set the marker color for lists.
-  set list(marker: (text(colors.accentColor)[•], text(colors.accentColor)[--]))
+  set list(marker: (text(theme.accentColor)[•], text(theme.accentColor)[--]))
 
   // Set the heading.
   show heading: it => {
-    set text(colors.accentColor)
+    set text(theme.accentColor)
     pad(bottom: 0.5em)[
-      #underline(stroke: 2pt + colors.accentColor, offset: 0.25em)[
+      #underline(stroke: 2pt + theme.accentColor, offset: 0.25em)[
         #upper(it.body)
       ]
     ]
@@ -279,11 +278,11 @@
   // Main content
   {
     show link: it => [
-      #it #linkIcon(color: colors.accentColor)
+      #it #linkIcon(color: theme.accentColor)
     ]
     pad(
-      left: pageMargin,
-      right: pageMargin,
+      left: page-margin,
+      right: page-margin,
       top: 8pt
     )[#columns(2, body)]
   }
