@@ -4,12 +4,14 @@
 
 A customizable resume/CV template focusing on clean and concise presentation, with a touch of color.
 
+**This template is available on [typst Universe](https://typst.app/universe/package/modern-resume)!**
+
 ## Requirements
 
 To compile this project you need the following:
 
-- Typst
-- Roboto font family
+- [typst](https://github.com/typst/typst)
+- [Roboto font family](https://fonts.google.com/specimen/Roboto)
 
 ## Compiling
 
