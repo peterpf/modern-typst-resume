@@ -1,0 +1,7 @@
+theme:
+    primary: "#313C4E"
+    secondary: "#222A33"
+    accentColor: "#449399"
+    text-primary: "#000000"
+    text-secondary: "#7C7C7C"
+    text-tertiary: "#ffffff"

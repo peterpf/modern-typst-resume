@@ -1,11 +1,3 @@
-#let colors = (
-  primary: rgb("#313C4E"),
-  secondary: rgb("#222A33"),
-  accentColor: rgb("#449399"),
-  text-primary: black,
-  text-secondary: rgb("#7C7C7C"),
-  text-tertiary: white,
-)
 #let page-margin = 16pt
 #let text-size = (
   super-large: 24pt,
@@ -16,9 +8,19 @@
 
 // assets contains the base paths to folders for icons, images, ...
 #let assets = (
-  icons: "assets/icons"
+  icons: "assets/icons", // path to the icons folder
+  config: "assets/config.yaml", // path to the configuration file
 )
-
+// load the configuration and parse the color-theme.
+#{
+  let config = yaml(assets.config)
+  let theme = (:)
+  for pair in config.theme.pairs() {
+    let key = pair.at(0)
+    let color = rgb(pair.at(1))
+    theme.insert(key, color)
+  }
+}
 // joinPath joins the arguments to a valid system path.
 #let joinPath(..parts) = {
   let path = ""
@@ -57,7 +59,7 @@
 
 // infoItem returns a content element with an icon followed by text.
 #let infoItem(iconName, msg) = {
-  text(colors.text-tertiary, [#icon(iconName, baseline: 0.25em) #msg])
+  text(theme.text-tertiary, [#icon(iconName, baseline: 0.25em) #msg])
 }
 
 // circularAvatarImage returns a rounded image with a border.
@@ -65,7 +67,7 @@
   block(
     radius: 50%,
     clip: true,
-    stroke: 4pt + colors.accentColor,
+    stroke: 4pt + theme.accentColor,
     width: 2cm
   )[
     #img
@@ -76,9 +78,9 @@
   grid(
     columns: (1fr, auto),
     align(bottom)[
-      #text(colors.text-tertiary, name, size: text-size.super-large)\
-      #text(colors.accentColor, title)\
-      #text(colors.text-tertiary, bio)
+      #text(theme.text-tertiary, name, size: text-size.super-large)\
+      #text(theme.accentColor, title)\
+      #text(theme.text-tertiary, bio)
     ],
     if avatar != none {
       circularAvatarImage(avatar)
@@ -138,7 +140,7 @@
     columns: 1,
     rows: (auto, auto),
     headerRibbon(
-      colors.primary,
+      theme.primary,
       headline(author, job-title, bio, avatar: avatar)
     ),
     headerRibbon(colors.secondary, contact-details(contact-options))
@@ -149,13 +151,13 @@
   let content
   if fill {
     content = rect(
-      fill: colors.primary.desaturate(1%),
+      fill: theme.primary.desaturate(1%),
       radius: 15%)[
-        #text(colors.text-tertiary)[#msg]
+        #text(theme.text-tertiary)[#msg]
       ]
   } else {
     content = rect(
-      stroke: 1pt + colors.text-secondary.desaturate(1%),
+      stroke: 1pt + theme.text-secondary.desaturate(1%),
       radius: 15%)[#msg]
   }
   [
@@ -174,12 +176,12 @@
   #text(size: text-size.large)[*#title*]\
   #subtitle\
   #text(style: "italic")[
-    #text(colors.accentColor)[#date-from - #date-to]\
+    #text(theme.accentColor)[#date-from - #date-to]\
     #if facility-description != "" [
-      #set text(colors.text-secondary)
+      #set text(theme.text-secondary)
       #facility-description\
     ]
-    #text(colors.accentColor)[#label]\
+    #text(theme.accentColor)[#label]\
   ]
   #task-description
 ]
@@ -205,7 +207,7 @@
 
   text(size: text-size.large)[#title #date\ ]
   if subtitle != "" {
-      set text(colors.text-secondary, style: "italic")
+      set text(theme.text-secondary, style: "italic")
       text()[#subtitle\ ]
   }
   if description != "" {
@@ -250,13 +252,13 @@
   )
 
   // Set the marker color for lists.
-  set list(marker: (text(colors.accentColor)[•], text(colors.accentColor)[--]))
+  set list(marker: (text(theme.accentColor)[•], text(theme.accentColor)[--]))
 
   // Set the heading.
   show heading: it => {
-    set text(colors.accentColor)
+    set text(theme.accentColor)
     pad(bottom: 0.5em)[
-      #underline(stroke: 2pt + colors.accentColor, offset: 0.25em)[
+      #underline(stroke: 2pt + theme.accentColor, offset: 0.25em)[
         #upper(it.body)
       ]
     ]
@@ -278,7 +280,7 @@
   // Main content
   {
     show link: it => [
-      #it #linkIcon(color: colors.accentColor)
+      #it #linkIcon(color: theme.accentColor)
     ]
     pad(
       left: page-margin,
