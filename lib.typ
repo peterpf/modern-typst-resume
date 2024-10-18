@@ -12,14 +12,12 @@
   config: "assets/config.yaml", // path to the configuration file
 )
 // load the configuration and parse the color-theme.
-#{
-  let config = yaml(assets.config)
-  let theme = (:)
-  for pair in config.theme.pairs() {
-    let key = pair.at(0)
-    let color = rgb(pair.at(1))
-    theme.insert(key, color)
-  }
+#let config = yaml(assets.config)
+#let theme = (:)
+#for pair in config.theme.pairs() {
+  let key = pair.at(0)
+  let color = rgb(pair.at(1))
+  theme.insert(key, color)
 }
 // joinPath joins the arguments to a valid system path.
 #let joinPath(..parts) = {
@@ -143,7 +141,7 @@
       theme.primary,
       headline(author, job-title, bio, avatar: avatar)
     ),
-    headerRibbon(colors.secondary, contact-details(contact-options))
+    headerRibbon(theme.secondary, contact-details(contact-options))
   )
 }
 
