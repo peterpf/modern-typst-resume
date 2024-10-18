@@ -9,8 +9,14 @@
 )
 
 // debug indicates whether the template should be compiled in debug mode for debugging.
-#let debug = sys.inputs.at("debug", default: true)
+#let debug =  false
 
+// Check for Typst version that supports passing CLI arguments for configuring debug mode.
+#if sys.version <= version(0, 11, 0) {
+  false
+} else {
+  debug = sys.inputs.at("debug", default: false)
+}
 // config_filepath specifies the path to the configuration file for the theme.
 #let config_filepath = if debug { "template/config.yaml"} else {  "config.yaml" }
 
