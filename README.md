@@ -190,6 +190,14 @@ Import this element from the template module with `project`.
 
 I'm grateful for any improvements and suggestions.
 
+### Testing
+
+Run the tests with
+
+```bash
+typst compile tests/test_lib.typ --root .
+```
+
 ## Acknowledgements
 
 This project would not be what it is without:
