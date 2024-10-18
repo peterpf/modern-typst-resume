@@ -1,4 +1,6 @@
+#import "utils.typ": load_config, joinPath
 #let page-margin = 16pt
+
 #let text-size = (
   super-large: 24pt,
   large: 14pt,
@@ -6,32 +8,20 @@
   small: 9pt,
 )
 
+// debug indicates whether the template should be compiled in debug mode for debugging.
+#let debug = sys.inputs.at("debug", default: true)
+
+// config_filepath specifies the path to the configuration file for the theme.
+#let config_filepath = if debug { "template/config.yaml"} else {  "config.yaml" }
+
 // assets contains the base paths to folders for icons, images, ...
 #let assets = (
   icons: "assets/icons", // path to the icons folder
-  config: "assets/config.yaml", // path to the configuration file
+  config: "/config.yaml", // path to the configuration file; TODO change path to "config.yaml" for the actual template (currently it's configured for debugging)
 )
 // load the configuration and parse the color-theme.
-#let config = yaml(assets.config)
-#let theme = (:)
-#for pair in config.theme.pairs() {
-  let key = pair.at(0)
-  let color = rgb(pair.at(1))
-  theme.insert(key, color)
-}
-// joinPath joins the arguments to a valid system path.
-#let joinPath(..parts) = {
-  let path = ""
-  let pathSeparator = "/"
-  for part in parts.pos() {
-    if part.at(part.len() - 1) == pathSeparator {
-      path += part
-    } else {
-      path += part + pathSeparator
-    }
-  }
-  return path
-}
+#let config = load_config(config_filepath)
+#let theme = config.theme
 
 // Load an icon by 'name' and set its color.
 #let icon(
@@ -57,7 +47,7 @@
 
 // infoItem returns a content element with an icon followed by text.
 #let infoItem(iconName, msg) = {
-  text(theme.text-tertiary, [#icon(iconName, baseline: 0.25em) #msg])
+  text(theme.textTertiary, [#icon(iconName, baseline: 0.25em) #msg])
 }
 
 // circularAvatarImage returns a rounded image with a border.
@@ -76,9 +66,9 @@
   grid(
     columns: (1fr, auto),
     align(bottom)[
-      #text(theme.text-tertiary, name, size: text-size.super-large)\
+      #text(theme.textTertiary, name, size: text-size.super-large)\
       #text(theme.accentColor, title)\
-      #text(theme.text-tertiary, bio)
+      #text(theme.textTertiary, bio)
     ],
     if avatar != none {
       circularAvatarImage(avatar)
@@ -151,11 +141,11 @@
     content = rect(
       fill: theme.primary.desaturate(1%),
       radius: 15%)[
-        #text(theme.text-tertiary)[#msg]
+        #text(theme.textTertiary)[#msg]
       ]
   } else {
     content = rect(
-      stroke: 1pt + theme.text-secondary.desaturate(1%),
+      stroke: 1pt + theme.textSecondary.desaturate(1%),
       radius: 15%)[#msg]
   }
   [
@@ -176,7 +166,7 @@
   #text(style: "italic")[
     #text(theme.accentColor)[#date-from - #date-to]\
     #if facility-description != "" [
-      #set text(theme.text-secondary)
+      #set text(theme.textSecondary)
       #facility-description\
     ]
     #text(theme.accentColor)[#label]\
@@ -205,7 +195,7 @@
 
   text(size: text-size.large)[#title #date\ ]
   if subtitle != "" {
-      set text(theme.text-secondary, style: "italic")
+      set text(theme.textSecondary, style: "italic")
       text()[#subtitle\ ]
   }
   if description != "" {
