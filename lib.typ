@@ -8,22 +8,13 @@
   small: 9pt,
 )
 
-// debug indicates whether the template should be compiled in debug mode for debugging.
-#let debug =  false
-
-// Check for Typst version that supports passing CLI arguments for configuring debug mode.
-#if sys.version <= version(0, 11, 0) {
-  false
-} else {
-  debug = sys.inputs.at("debug", default: false)
-}
 // config_filepath specifies the path to the configuration file for the theme.
-#let config_filepath = if debug { "template/config.yaml"} else {  "config.yaml" }
+#let config_filepath = sys.inputs.at("config", default: "config.yaml")
 
 // assets contains the base paths to folders for icons, images, ...
 #let assets = (
   icons: "assets/icons", // path to the icons folder
-  config: "/config.yaml", // path to the configuration file; TODO change path to "config.yaml" for the actual template (currently it's configured for debugging)
+  config: config_filepath, // path to the configuration file
 )
 // load the configuration and parse the color-theme.
 #let config = load_config(config_filepath)
