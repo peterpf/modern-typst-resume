@@ -173,9 +173,21 @@ Import this element from the template module with `project`.
 )
 ```
 
-## Contributing
+## Development
 
-I'm grateful for any improvements and suggestions.
+### Testing
+
+Run the tests with
+
+```bash
+typst compile tests/test_lib.typ --root . --input config=tests/config.yaml
+```
+
+or with
+
+```bash
+nix flake check
+```
 
 ## Acknowledgements
 
