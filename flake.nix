@@ -18,10 +18,25 @@
           typos.enable = true;
         };
       };
+      tests = pkgs.stdenv.mkDerivation {
+        name = "test_lib";
+        src = self;
+        buildInputs = [ pkgs.typst ];
+        buildPhase = ''bash
+          typst compile tests/test_lib.typ --root . --input config=tests/config.yaml >> log.txt
+        '';
+
+        unpackPhase = "";
+        installPhase = ''bash
+          mkdir -p $out/bin
+          mv log.txt $out/bin
+        '';
+      };
     };
-    devShells.${system}.default = nixpkgs.legacyPackages.${system}.mkShell {
+
+    devShells.${system}.default = pkgs.mkShell {
       inherit (self.checks.${system}.pre-commit-check) shellHook;
-      packages = with pkgs; [ typst pre-commit ];
+      packages = [ pkgs.typst pkgs.pre-commit ];
     };
   };
 }
