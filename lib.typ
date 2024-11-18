@@ -1,12 +1,6 @@
-#let colors = (
-  primary: rgb("#313C4E"),
-  secondary: rgb("#222A33"),
-  accentColor: rgb("#449399"),
-  text-primary: black,
-  text-secondary: rgb("#7C7C7C"),
-  text-tertiary: white,
-)
+#import "utils.typ": load_config, joinPath
 #let page-margin = 16pt
+
 #let text-size = (
   super-large: 24pt,
   large: 14pt,
@@ -14,26 +8,19 @@
   small: 9pt,
 )
 
-// assets contains the base paths to folders for icons, images, ...
+// assets contains the paths to template resources (config file, icons, ...).
 #let assets = (
-  icons: "assets/icons"
+  // icons defines the path to the icons folder.
+  icons: "assets/icons",
+  // config defines the path to the configuration file that is passed at compile-time with the `--config` flag, defaults to `config.yaml`.
+  config: sys.inputs.at("config", default: "config.yaml"),
 )
 
-// joinPath joins the arguments to a valid system path.
-#let joinPath(..parts) = {
-  let path = ""
-  let pathSeparator = "/"
-  for part in parts.pos() {
-    if part.at(part.len() - 1) == pathSeparator {
-      path += part
-    } else {
-      path += part + pathSeparator
-    }
-  }
-  return path
-}
+// load the configuration and parse the color-theme.
+#let config = load_config(assets.config)
+#let theme = config.theme
 
-// Load an icon by 'name' and set its color.
+// icon loads an icon resource by 'name' with the requested color (currently only supports SVG).
 #let icon(
   name,
   color: white,
@@ -57,7 +44,7 @@
 
 // infoItem returns a content element with an icon followed by text.
 #let infoItem(iconName, msg) = {
-  text(colors.text-tertiary, [#icon(iconName, baseline: 0.25em) #msg])
+  text(theme.textTertiary, [#icon(iconName, baseline: 0.25em) #msg])
 }
 
 // circularAvatarImage returns a rounded image with a border.
@@ -65,7 +52,7 @@
   block(
     radius: 50%,
     clip: true,
-    stroke: 4pt + colors.accentColor,
+    stroke: 4pt + theme.accentColor,
     width: 2cm
   )[
     #img
@@ -76,9 +63,9 @@
   grid(
     columns: (1fr, auto),
     align(bottom)[
-      #text(colors.text-tertiary, name, size: text-size.super-large)\
-      #text(colors.accentColor, title)\
-      #text(colors.text-tertiary, bio)
+      #text(theme.textTertiary, name, size: text-size.super-large)\
+      #text(theme.accentColor, title)\
+      #text(theme.textTertiary, bio)
     ],
     if avatar != none {
       circularAvatarImage(avatar)
@@ -138,10 +125,10 @@
     columns: 1,
     rows: (auto, auto),
     headerRibbon(
-      colors.primary,
+      theme.primary,
       headline(author, job-title, bio, avatar: avatar)
     ),
-    headerRibbon(colors.secondary, contact-details(contact-options))
+    headerRibbon(theme.secondary, contact-details(contact-options))
   )
 }
 
@@ -149,13 +136,13 @@
   let content
   if fill {
     content = rect(
-      fill: colors.primary.desaturate(1%),
+      fill: theme.primary.desaturate(1%),
       radius: 15%)[
-        #text(colors.text-tertiary)[#msg]
+        #text(theme.textTertiary)[#msg]
       ]
   } else {
     content = rect(
-      stroke: 1pt + colors.text-secondary.desaturate(1%),
+      stroke: 1pt + theme.textSecondary.desaturate(1%),
       radius: 15%)[#msg]
   }
   [
@@ -174,12 +161,12 @@
   #text(size: text-size.large)[*#title*]\
   #subtitle\
   #text(style: "italic")[
-    #text(colors.accentColor)[#date-from - #date-to]\
+    #text(theme.accentColor)[#date-from - #date-to]\
     #if facility-description != "" [
-      #set text(colors.text-secondary)
+      #set text(theme.textSecondary)
       #facility-description\
     ]
-    #text(colors.accentColor)[#label]\
+    #text(theme.accentColor)[#label]\
   ]
   #task-description
 ]
@@ -205,7 +192,7 @@
 
   text(size: text-size.large)[#title #date\ ]
   if subtitle != "" {
-      set text(colors.text-secondary, style: "italic")
+      set text(theme.textSecondary, style: "italic")
       text()[#subtitle\ ]
   }
   if description != "" {
@@ -250,13 +237,13 @@
   )
 
   // Set the marker color for lists.
-  set list(marker: (text(colors.accentColor)[•], text(colors.accentColor)[--]))
+  set list(marker: (text(theme.accentColor)[•], text(theme.accentColor)[--]))
 
   // Set the heading.
   show heading: it => {
-    set text(colors.accentColor)
+    set text(theme.accentColor)
     pad(bottom: 0.5em)[
-      #underline(stroke: 2pt + colors.accentColor, offset: 0.25em)[
+      #underline(stroke: 2pt + theme.accentColor, offset: 0.25em)[
         #upper(it.body)
       ]
     ]
@@ -278,7 +265,7 @@
   // Main content
   {
     show link: it => [
-      #it #linkIcon(color: colors.accentColor)
+      #it #linkIcon(color: theme.accentColor)
     ]
     pad(
       left: page-margin,

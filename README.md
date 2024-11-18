@@ -77,39 +77,26 @@ Example outputs for different color palettes:
 |![Default colors](./docs/images/demo-navy-dark.png) | ![Pink colors](./docs/images/demo-pink.png)|
 
 
-
 ## Customization
 
-Note: customization is currently only supported when cloning the template locally. Allowing customization via a "Typst universe"-installed template is a feature that is actively worked on.
-
 The template allows you to make it yours by defining a custom color palette.
-Customize the color theme by changing the values of the `color` dictionary in [lib.typ](lib.typ). For example:
+By default, the template loads the configuration located at [template/config.yaml](https://github.com/peterpf/modern-typst-resume/blob/main/template/config.yaml):
 
-- The default color palette:
+```yaml
+theme:
+    primary: "#313C4E"
+    secondary: "#222A33"
+    accentColor: "#449399"
+    textPrimary: "#000000"
+    textSecondary: "#7C7C7C"
+    textTertiary: "#ffffff"
+```
 
-  ```typst
-  #let colors = (
-    primary: rgb("#313C4E"),
-    secondary: rgb("#222A33"),
-    accent-color: rgb("#449399"),
-    text-primary: black,
-    text-secondary: rgb("#7C7C7C"),
-    text-tertiary: white,
-  )
-  ```
+You can change the location of the configuration file by passing it to the compiler via
 
-- A pink color palette:
-
-  ```typst
-  #let colors = (
-    primary: rgb("#e755e0"),
-    secondary: rgb("#ad00c2"),
-    accent-color: rgb("#00d032"),
-    text-primary: black,
-    text-secondary: rgb("#7C7C7C"),
-    text-tertiary: white,
-  )
-  ```
+```bash
+typst compile file.typ --input config=path/to/config.yaml
+```
 
 ## Elements
 
