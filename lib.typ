@@ -8,19 +8,19 @@
   small: 9pt,
 )
 
-// config_filepath specifies the path to the configuration file for the theme.
-#let config_filepath = sys.inputs.at("config", default: "config.yaml")
-
-// assets contains the base paths to folders for icons, images, ...
+// assets contains the paths to template resources (config file, icons, ...).
 #let assets = (
-  icons: "assets/icons", // path to the icons folder
-  config: config_filepath, // path to the configuration file
+  // icons defines the path to the icons folder.
+  icons: "assets/icons",
+  // config defines the path to the configuration file that is passed at compile-time with the `--config` flag, defaults to `config.yaml`.
+  config: sys.inputs.at("config", default: "config.yaml"),
 )
+
 // load the configuration and parse the color-theme.
-#let config = load_config(config_filepath)
+#let config = load_config(assets.config)
 #let theme = config.theme
 
-// Load an icon by 'name' and set its color.
+// icon loads an icon resource by 'name' with the requested color (currently only supports SVG).
 #let icon(
   name,
   color: white,

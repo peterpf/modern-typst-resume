@@ -16,6 +16,7 @@
   return theme
 }
 
+// load_config parses the template configuration object from the `filepath`.
 #let load_config(filepath) = {
   let cfg = yaml(filepath)
 
