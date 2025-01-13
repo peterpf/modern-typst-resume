@@ -1,14 +1,15 @@
 {
-  description = "A very basic flake";
+  description = "Nix flake for the project 'modern-typst-resume'";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/24.05";
-    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
+    typst.url = "github:typst/typst?ref=v0.12.0";
   };
 
-  outputs = { self, nixpkgs, pre-commit-hooks }: let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+  outputs = { self, nixpkgs, typst }:
+  let
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
   in
   {
     checks.${system} = {
@@ -36,7 +37,10 @@
 
     devShells.${system}.default = pkgs.mkShell {
       inherit (self.checks.${system}.pre-commit-check) shellHook;
-      packages = [ pkgs.typst pkgs.pre-commit ];
+      packages = [
+        typst.packages.${system}.typst-dev
+        pkgs.pre-commit
+      ];
     };
   };
 }
