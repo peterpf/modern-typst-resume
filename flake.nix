@@ -4,12 +4,16 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/24.05";
     typst.url = "github:typst/typst?ref=v0.12.0";
+    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
 
-  outputs = { self, nixpkgs, typst }:
+  outputs = { self, nixpkgs, typst, pre-commit-hooks }:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    pre-commit-hooks-deps = [
+      pkgs.yamlfmt
+    ];
   in
   {
     checks.${system} = {
@@ -17,6 +21,10 @@
         src = ./.;
         hooks = {
           typos.enable = true;
+          yamlfmt = {
+            enable = true;
+            entry = "yamlfmt";
+          };
         };
       };
       tests = pkgs.stdenv.mkDerivation {
@@ -40,7 +48,7 @@
       packages = [
         typst.packages.${system}.typst-dev
         pkgs.pre-commit
-      ];
+      ] ++ pre-commit-hooks-deps;
     };
   };
 }
