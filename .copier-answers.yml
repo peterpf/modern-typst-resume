@@ -1,0 +1,9 @@
+_commit: 1607ed6
+_src_path: https://github.com/peterpf/copier-template-typst
+author: Peter Egger
+flakes_enabled: true
+package_name: ''
+project_description: A modern Typst resume
+project_name: modern-typst-resume
+project_type: package
+typst_version: 0.12.0
