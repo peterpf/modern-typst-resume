@@ -35,11 +35,11 @@ The following code provides a minimum working example:
 #import "@preview/modern-resume": *
 
 #show: modern-resume.with(
-  author: "John Doe",
-  job-title: "Data Scientist",
-  bio: lorem(5),
-  avatar: image("avatar.png"),
-  contact-options: (
+  author: "John Doe",           // Optional parameter
+  job-title: "Data Scientist",  // Optional parameter
+  bio: lorem(5),                // Optional parameter
+  avatar: image("avatar.png"),  // Optional parameter
+  contact-options: (            // All entries are optional
     email: link("mailto:john.doe@gmail.com")[john.doe\@gmail.com],
     mobile: "+43 1234 5678",
     location: "Austria",
