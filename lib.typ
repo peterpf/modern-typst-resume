@@ -38,7 +38,7 @@
       baseline: baseline,
       height: height,
       width: width,
-      image.decode(colorizedImage)
+      image(bytes(colorizedImage))
     )
 }
 
