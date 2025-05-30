@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/24.05";
-    typst.url = "github:typst/typst?ref=v0.12.0";
+    typst.url = "github:typst/typst?ref=v0.13.1";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
 
