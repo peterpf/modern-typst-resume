@@ -8,7 +8,7 @@ description = "A modern resume/CV template."
 repository = "https://github.com/peterpf/modern-typst-resume"
 keywords = ["resume", "colorful"]
 categories = ["cv"]
-compiler = "0.12.0"
+compiler = "0.13.1"
 exclude = []
 
 [template]

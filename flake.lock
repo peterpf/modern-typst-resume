@@ -199,13 +199,13 @@
     "rust-manifest": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-tB9BZB6nRHDk5ELIVlGYlIjViLKBjQl52nC1avhcCwA=",
+        "narHash": "sha256-Yqu2/i9170R7pQhvOCR1f5SyFr7PcFbO6xcMr9KWruQ=",
         "type": "file",
-        "url": "https://static.rust-lang.org/dist/channel-rust-1.81.0.toml"
+        "url": "https://static.rust-lang.org/dist/channel-rust-1.83.0.toml"
       },
       "original": {
         "type": "file",
-        "url": "https://static.rust-lang.org/dist/channel-rust-1.81.0.toml"
+        "url": "https://static.rust-lang.org/dist/channel-rust-1.83.0.toml"
       }
     },
     "systems": {
@@ -233,16 +233,16 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1729262215,
-        "narHash": "sha256-OfTMJ7ylVOJjL295W3Flj2upTiUQXmfkyDFSE1v8+a4=",
+        "lastModified": 1741342388,
+        "narHash": "sha256-vbBwIQt4xWZaKpXgFwDsRQIQ0mmsQPRR39m8iZnnuj0=",
         "owner": "typst",
         "repo": "typst",
-        "rev": "737895d769188f6fc154523e67a9102bc24c872e",
+        "rev": "8ace67d942a4b8c6b9d95b73b3a39f5d0259c7b2",
         "type": "github"
       },
       "original": {
         "owner": "typst",
-        "ref": "v0.12.0",
+        "ref": "v0.13.1",
         "repo": "typst",
         "type": "github"
       }
