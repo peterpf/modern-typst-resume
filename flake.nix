@@ -30,7 +30,7 @@
         src = self;
         buildInputs = [pkgs.typst];
         buildPhase = ''
-          typst compile tests/test_lib.typ --root . --input config=tests/config.yaml >> log.txt
+          typst compile tests/test_lib.typ --root . >> log.txt
         '';
 
         unpackPhase = "";

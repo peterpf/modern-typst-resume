@@ -1,4 +1,14 @@
-#import "../lib.typ": modern-resume, experience-work, experience-edu, project, pill
+#import "../lib.typ": modern-resume, experience-work, experience-edu, project, pill, default-theme
+
+// Create a custom theme based on the config.yaml
+#let custom-theme = (
+  primary: rgb("#ffc0cb"),
+  secondary: rgb("#222A33"),
+  accentColor: rgb("#449399"),
+  textPrimary: rgb("#000000"),
+  textSecondary: rgb("#7C7C7C"),
+  textTertiary: rgb("#ffffff"),
+)
 
 #show: modern-resume.with(
   author: "John Doe",
@@ -13,6 +23,7 @@
     github: link("https://github.com/jdoe")[github.com/jdoe],
     website: link("https://jdoe.dev")[jdoe.dev],
   ),
+  theme: custom-theme,
 )
 
 == Education
@@ -26,6 +37,7 @@
   ],
   date-from: "10/2021",
   date-to: "07/2023",
+  theme: custom-theme,
 )
 
 #experience-edu(
@@ -37,6 +49,7 @@
   ],
   date-from: "09/2018",
   date-to: "07/2021",
+  theme: custom-theme,
 )
 
 #experience-edu(
@@ -47,6 +60,7 @@
   ],
   date-from: "09/2018",
   date-to: "07/2021",
+  theme: custom-theme,
 )
 
 == Work experience
@@ -59,6 +73,7 @@
     - Short summary of your responsibilities
   ],
   date-from: "08/2021",
+  theme: custom-theme,
 )
 
 #experience-work(
@@ -70,6 +85,7 @@
   ],
   date-from: "09/2018",
   date-to: "07/2021",
+  theme: custom-theme,
 )
 
 #experience-work(
@@ -81,15 +97,16 @@
   ],
   date-from: "09/2015",
   date-to: "07/2016",
+  theme: custom-theme,
 )
 
 #colbreak()
 
 == Skills
 
-#pill("Teamwork", fill: true)
-#pill("Critical thinking", fill: true)
-#pill("Problem solving", fill: true)
+#pill("Teamwork", fill: true, theme: custom-theme)
+#pill("Critical thinking", fill: true, theme: custom-theme)
+#pill("Problem solving", fill: true, theme: custom-theme)
 
 == Projects
 
@@ -99,6 +116,7 @@
     - #lorem(20)
   ],
   date-from: "08/2022",
+  theme: custom-theme,
 )
 
 #project(
@@ -109,6 +127,7 @@
   ],
   date-from: "08/2022",
   date-to: "09/2022",
+  theme: custom-theme,
 )
 
 == Certificates
@@ -118,26 +137,29 @@
   subtitle: "Issued by authority XY",
   date-from: "08/2022",
   date-to: "09/2022",
+  theme: custom-theme,
 )
 
 #project(
   title: "Certificate of XY",
   subtitle: "Issued by authority XY",
   date-from: "05/2021",
+  theme: custom-theme,
 )
 
 #project(
   title: "Certificate of XY",
   subtitle: "Issued by authority XY",
+  theme: custom-theme,
 )
 
 == Languages
 
-#pill("German (native)")
-#pill("English (C1)")
+#pill("German (native)", theme: custom-theme)
+#pill("English (C1)", theme: custom-theme)
 
 == Interests
 
-#pill("Maker-culture")
-#pill("Science")
-#pill("Sports")
+#pill("Maker-culture", theme: custom-theme)
+#pill("Science", theme: custom-theme)
+#pill("Sports", theme: custom-theme)

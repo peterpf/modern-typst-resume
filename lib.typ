@@ -1,4 +1,4 @@
-#import "utils.typ": load_config, joinPath
+#import "utils.typ": joinPath
 #let page-margin = 16pt
 
 #let text-size = (
@@ -8,17 +8,21 @@
   small: 9pt,
 )
 
-// assets contains the paths to template resources (config file, icons, ...).
+// assets contains the paths to template resources (icons, ...).
 #let assets = (
   // icons defines the path to the icons folder.
   icons: "assets/icons",
-  // config defines the path to the configuration file that is passed at compile-time with the `--config` flag, defaults to `config.yaml`.
-  config: sys.inputs.at("config", default: "config.yaml"),
 )
 
-// load the configuration and parse the color-theme.
-#let config = load_config(assets.config)
-#let theme = config.theme
+// Default theme colors
+#let default-theme = (
+  primary: rgb("#313C4E"),
+  secondary: rgb("#222A33"),
+  accentColor: rgb("#449399"),
+  textPrimary: rgb("#000000"),
+  textSecondary: rgb("#7C7C7C"),
+  textTertiary: rgb("#ffffff"),
+)
 
 // icon loads an icon resource by 'name' with the requested color (currently only supports SVG).
 #let icon(
@@ -43,12 +47,12 @@
 }
 
 // infoItem returns a content element with an icon followed by text.
-#let infoItem(iconName, msg) = {
+#let infoItem(iconName, msg, theme: default-theme) = {
   text(theme.textTertiary, [#icon(iconName, baseline: 0.25em) #msg])
 }
 
 // circularAvatarImage returns a rounded image with a border.
-#let circularAvatarImage(img) = {
+#let circularAvatarImage(img, theme: default-theme) = {
   block(
     radius: 50%,
     clip: true,
@@ -59,7 +63,7 @@
   ]
 }
 
-#let headline(name, title, bio, avatar: none) = {
+#let headline(name, title, bio, avatar: none, theme: default-theme) = {
   grid(
     columns: (1fr, auto),
     align(bottom)[
@@ -68,13 +72,13 @@
       #text(theme.textTertiary, bio)
     ],
     if avatar != none {
-      circularAvatarImage(avatar)
+      circularAvatarImage(avatar, theme: theme)
     }
   )
 }
 
 // contactDetails returns a grid element with neatly organized contact details.
-#let contactDetails(contactOptionsDict) = {
+#let contactDetails(contactOptionsDict, theme: default-theme) = {
   if contactOptionsDict.len() == 0 {
     return
   }
@@ -95,7 +99,7 @@
 
   let renderContactOptions(contactOptionDictPairs) = [
     #for (key, value) in contactOptionDictPairs [
-        #infoItem(contactOptionKeyToIconMap.at(key), value)\
+        #infoItem(contactOptionKeyToIconMap.at(key), value, theme: theme)\
       ]
   ]
 
@@ -120,19 +124,19 @@
   )
 }
 
-#let header(author, job-title, bio: none, avatar: none, contact-options: ()) = {
+#let header(author, job-title, bio: none, avatar: none, contact-options: (), theme: default-theme) = {
   grid(
     columns: 1,
     rows: (auto, auto),
     headerRibbon(
       theme.primary,
-      headline(author, job-title, bio, avatar: avatar)
+      headline(author, job-title, bio, avatar: avatar, theme: theme)
     ),
-    headerRibbon(theme.secondary, contactDetails(contact-options))
+    headerRibbon(theme.secondary, contactDetails(contact-options, theme: theme))
   )
 }
 
-#let pill(msg, fill: false) = {
+#let pill(msg, fill: false, theme: default-theme) = {
   let content
   if fill {
     content = rect(
@@ -157,7 +161,8 @@
   task-description: "",
   date-from: "Present",
   date-to: "Present",
-  label: "Courses") = [
+  label: "Courses",
+  theme: default-theme) = [
   #text(size: text-size.large)[*#title*]\
   #subtitle\
   #text(style: "italic")[
@@ -172,17 +177,17 @@
 ]
 
 // experience-edu renders a content block for educational experience.
-#let experience-edu(..args) = {
-  experience(..args, label: "Courses")
+#let experience-edu(..args, theme: default-theme) = {
+  experience(..args, label: "Courses", theme: theme)
 }
 
 // experience-work renders a content block for work experience.
-#let experience-work(..args) = {
-  experience(..args, label: "Achievements/Tasks")
+#let experience-work(..args, theme: default-theme) = {
+  experience(..args, label: "Achievements/Tasks", theme: theme)
 }
 
 // project renders a content block for a project.
-#let project(title: "", description: "", subtitle: "", date-from: "", date-to: "") = {
+#let project(title: "", description: "", subtitle: "", date-from: "", date-to: "", theme: default-theme) = {
   let date = ""
   if date-from != "" and date-to != "" {
     date = text(style: "italic")[(#date-from - #date-to)]
@@ -215,6 +220,9 @@
 
   // A list of contact options, defaults to an empty set.
   contact-options: (),
+  
+  // Custom theme, defaults to the default theme.
+  theme: default-theme,
 
   // The resume's content.
   body
@@ -259,7 +267,7 @@
     show link: it => [
       #it #linkIcon()
     ]
-    header(author, job-title, bio: bio, avatar: avatar, contact-options: contact-options)
+    header(author, job-title, bio: bio, avatar: avatar, contact-options: contact-options, theme: theme)
   }
 
   // Main content
