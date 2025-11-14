@@ -18,10 +18,7 @@
         src = ./.;
         hooks = {
           typos.enable = true;
-          yamlfmt = {
-            enable = true;
-            entry = "yamlfmt";
-          };
+          yamlfmt.enable = true;
           alejandra.enable = true;
         };
       };
