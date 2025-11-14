@@ -1,4 +1,4 @@
-#import "../lib.typ": modern-resume, experience-work, experience-edu, project, pill, default-theme
+#import "../lib.typ": modern-resume, experience, project, pill, default-theme
 
 // Create a custom theme based on the config.yaml
 #let custom-theme = (
@@ -28,7 +28,7 @@
 
 == Education
 
-#experience-edu(
+#experience(
   title: "Master's degree",
   subtitle: "University of Sciences",
   task-description: [
@@ -37,10 +37,11 @@
   ],
   date-from: "10/2021",
   date-to: "07/2023",
+  label: "Courses",
   theme: custom-theme,
 )
 
-#experience-edu(
+#experience(
   title: "Bachelor's degree",
   subtitle: "University of Sciences",
   task-description: [
@@ -49,10 +50,11 @@
   ],
   date-from: "09/2018",
   date-to: "07/2021",
+  label: "Courses",
   theme: custom-theme,
 )
 
-#experience-edu(
+#experience(
   title: "College for Science",
   subtitle: "College of XY",
   task-description: [
@@ -60,12 +62,13 @@
   ],
   date-from: "09/2018",
   date-to: "07/2021",
+  label: "Courses",
   theme: custom-theme,
 )
 
 == Work experience
 
-#experience-work(
+#experience(
   title: "Data Scientist",
   subtitle: "Some Company",
   facility-description: "Company operating in sector XY",
@@ -73,10 +76,11 @@
     - Short summary of your responsibilities
   ],
   date-from: "08/2021",
+  label: "Achievements/Tasks",
   theme: custom-theme,
 )
 
-#experience-work(
+#experience(
   title: "Full Stack Software Engineer",
   subtitle: [#link("https://www.google.com")[Some IT Company]],
   facility-description: "Company operating in sector XY",
@@ -85,10 +89,11 @@
   ],
   date-from: "09/2018",
   date-to: "07/2021",
+  label: "Achievements/Tasks",
   theme: custom-theme,
 )
 
-#experience-work(
+#experience(
   title: "Internship",
   subtitle: [#link("https://www.google.com")[Some IT Company]],
   facility-description: "Company operating in sector XY",
@@ -97,6 +102,7 @@
   ],
   date-from: "09/2015",
   date-to: "07/2016",
+  label: "Achievements/Tasks",
   theme: custom-theme,
 )
 

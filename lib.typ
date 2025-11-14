@@ -176,15 +176,6 @@
   #task-description
 ]
 
-// experience-edu renders a content block for educational experience.
-#let experience-edu(..args, theme: default-theme) = {
-  experience(..args, label: "Courses", theme: theme)
-}
-
-// experience-work renders a content block for work experience.
-#let experience-work(..args, theme: default-theme) = {
-  experience(..args, label: "Achievements/Tasks", theme: theme)
-}
 
 // project renders a content block for a project.
 #let project(title: "", description: "", subtitle: "", date-from: "", date-to: "", theme: default-theme) = {
