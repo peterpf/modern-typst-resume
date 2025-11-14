@@ -1,3 +1,4 @@
 .pre-commit-config.yaml
 tests/*.pdf
 .env
+.direnv
