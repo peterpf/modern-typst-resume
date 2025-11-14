@@ -2,7 +2,7 @@
   description = "Nix flake for the project 'modern-typst-resume'";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/25.05";
     typst.url = "github:typst/typst?ref=v0.13.1";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
