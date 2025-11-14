@@ -1,6 +1,14 @@
 # A modern typst CV template
 
-[![say thanks](https://img.shields.io/badge/Say%20Thanks-👍-1EAEDB.svg)](https://github.com/peterpf/modern-typst-resume/stargazers)
+<div style="display: flex; gap: 10px; justify-content: center; align-items: center; text-align: center">
+  <a href='https://ko-fi.com/O5O11OGPX2' target='_blank'>
+    <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi2.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+  </a>
+
+  <a href="https://github.com/peterpf/modern-typst-resume/stargazers" target="_blank">
+    <img src="https://img.shields.io/badge/Say%20Thanks-👍-1EAEDB.svg" border="0" alt="Say thanks and star me on Github"/>
+  </a>
+</div>
 
 A customizable resume/CV template focusing on clean and concise presentation, with a touch of color.
 
