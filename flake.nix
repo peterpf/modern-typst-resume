@@ -22,6 +22,7 @@
             enable = true;
             entry = "yamlfmt";
           };
+          alejandra.enable = true;
         };
       };
       tests = pkgs.stdenv.mkDerivation {
