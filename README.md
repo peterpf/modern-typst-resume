@@ -54,7 +54,7 @@ The following code provides a minimum working example:
     accentColor: rgb("#449399"),
     textPrimary: rgb("#000000"),
     textSecondary: rgb("#7C7C7C"),
-    textTertiary: rgb("#ffffff"),
+    textMuted: rgb("#ffffff"),
   ),
 )
 
@@ -99,7 +99,7 @@ You can create and pass your own theme dictionary to the `modern-resume` functio
   accentColor: rgb("#449399"),  // Accent color for headings and details
   textPrimary: rgb("#000000"),  // Primary text color
   textSecondary: rgb("#7C7C7C"),// Secondary text color
-  textTertiary: rgb("#ffffff"), // Text color for elements on dark background
+  textMuted: rgb("#ffffff"),    // Text color for elements on dark background
 )
 
 #show: modern-resume.with(

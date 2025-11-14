@@ -21,7 +21,7 @@
   accentColor: rgb("#449399"),
   textPrimary: rgb("#000000"),
   textSecondary: rgb("#7C7C7C"),
-  textTertiary: rgb("#ffffff"),
+  textMuted: rgb("#ffffff"),
 )
 
 // icon loads an icon resource by 'name' with the requested color (currently only supports SVG).
@@ -48,7 +48,7 @@
 
 // infoItem returns a content element with an icon followed by text.
 #let infoItem(iconName, msg, theme: default-theme) = {
-  text(theme.textTertiary, [#icon(iconName, baseline: 0.25em) #msg])
+  text(theme.textMuted, [#icon(iconName, baseline: 0.25em) #msg])
 }
 
 // circularAvatarImage returns a rounded image with a border.
@@ -67,9 +67,9 @@
   grid(
     columns: (1fr, auto),
     align(bottom)[
-      #text(theme.textTertiary, name, size: text-size.super-large)\
+      #text(theme.textMuted, name, size: text-size.super-large)\
       #text(theme.accentColor, title)\
-      #text(theme.textTertiary, bio)
+      #text(theme.textMuted, bio)
     ],
     if avatar != none {
       circularAvatarImage(avatar, theme: theme)
@@ -142,7 +142,7 @@
     content = rect(
       fill: theme.primary.desaturate(1%),
       radius: 15%)[
-        #text(theme.textTertiary)[#msg]
+        #text(theme.textMuted)[#msg]
       ]
   } else {
     content = rect(

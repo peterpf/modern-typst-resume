@@ -7,7 +7,7 @@
   accentColor: rgb("#449399"),
   textPrimary: rgb("#000000"),
   textSecondary: rgb("#7C7C7C"),
-  textTertiary: rgb("#ffffff"),
+  textMuted: rgb("#ffffff"),
 )
 
 #show: modern-resume.with(
