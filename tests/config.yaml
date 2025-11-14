@@ -1,7 +1,7 @@
 theme:
-    primary: "#ffc0cb"
-    secondary: "#222A33"
-    accentColor: "#449399"
-    textPrimary: "#000000"
-    textSecondary: "#7C7C7C"
-    textTertiary: "#ffffff"
+  primary: "#ffc0cb"
+  secondary: "#222A33"
+  accentColor: "#449399"
+  textPrimary: "#000000"
+  textSecondary: "#7C7C7C"
+  textTertiary: "#ffffff"
