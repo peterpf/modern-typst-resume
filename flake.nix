@@ -11,9 +11,6 @@
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-    pre-commit-hooks-deps = [
-      pkgs.yamlfmt
-    ];
   in
   {
     checks.${system} = {
@@ -47,8 +44,7 @@
       inherit (self.checks.${system}.pre-commit-check) shellHook;
       packages = [
         typst.packages.${system}.typst-dev
-        pkgs.pre-commit
-      ] ++ pre-commit-hooks-deps;
+      ] ++ self.checks.${system}.pre-commit-check.enabledPackages;
     };
   };
 }
