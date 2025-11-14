@@ -47,11 +47,20 @@ The following code provides a minimum working example:
     github: link("https://github.com/jdoe")[github.com/jdoe],
     website: link("https://jdoe.dev")[jdoe.dev],
   ),
+  // Optional custom theme
+  theme: (
+    primary: rgb("#313C4E"),
+    secondary: rgb("#222A33"),
+    accentColor: rgb("#449399"),
+    textPrimary: rgb("#000000"),
+    textSecondary: rgb("#7C7C7C"),
+    textMuted: rgb("#ffffff"),
+  ),
 )
 
 == Education
 
-#experience-edu(
+#experience(
   title: "Master's degree",
   subtitle: "University of Sciences",
   task-description: [
@@ -60,6 +69,7 @@ The following code provides a minimum working example:
   ],
   date-from: "10/2021",
   date-to: "07/2023",
+  label: "Courses",
 )
 
 // More content goes here
@@ -80,23 +90,25 @@ Example outputs for different color palettes:
 ## Customization
 
 The template allows you to make it yours by defining a custom color palette.
-By default, the template loads the configuration located at [template/config.yaml](https://github.com/peterpf/modern-typst-resume/blob/main/template/config.yaml):
+You can create and pass your own theme dictionary to the `modern-resume` function:
 
-```yaml
-theme:
-    primary: "#313C4E"
-    secondary: "#222A33"
-    accentColor: "#449399"
-    textPrimary: "#000000"
-    textSecondary: "#7C7C7C"
-    textTertiary: "#ffffff"
+```typst
+#let custom-theme = (
+  primary: rgb("#ffc0cb"),      // Pink background for header
+  secondary: rgb("#222A33"),    // Dark background for contact info
+  accentColor: rgb("#449399"),  // Accent color for headings and details
+  textPrimary: rgb("#000000"),  // Primary text color
+  textSecondary: rgb("#7C7C7C"),// Secondary text color
+  textMuted: rgb("#ffffff"),    // Text color for elements on dark background
+)
+
+#show: modern-resume.with(
+  // ... other parameters
+  theme: custom-theme,
+)
 ```
 
-You can change the location of the configuration file by passing it to the compiler via
-
-```bash
-typst compile file.typ --input config=path/to/config.yaml
-```
+If you don't specify a theme, the default theme will be used.
 
 ## Elements
 
@@ -120,14 +132,14 @@ Import this element from the template module with `pill`.
 #pill("Critical thinking", fill: true)
 ```
 
-### Educational/work experience
+### Experience
 
-Import the elements from the template module with `experience-edu` and `experience-work` respectively.
+Import the experience element from the template module with `experience`.
 
 ![educational experience](docs/images/educational-experience.png)
 
 ```typst
-#experience-edu(
+#experience(
   title: "Master's degree",
   subtitle: "University of Sciences",
   task-description: [
@@ -136,13 +148,14 @@ Import the elements from the template module with `experience-edu` and `experien
   ],
   date-from: "10/2021",
   date-to: "07/2023",
+  label: "Courses",
 )
 ```
 
 ![work experience](docs/images/work-experience.png)
 
 ```typst
-#experience-work(
+#experience(
   title: "Full Stack Software Engineer",
   subtitle: [#link("https://www.google.com")[Some IT Company]],
   facility-description: "Company operating in sector XY",
@@ -151,6 +164,7 @@ Import the elements from the template module with `experience-edu` and `experien
   ],
   date-from: "09/2018",
   date-to: "07/2021",
+  label: "Achievements/Tasks",
 )
 ```
 
@@ -180,7 +194,7 @@ Import this element from the template module with `project`.
 Run the tests with
 
 ```bash
-typst compile tests/test_lib.typ --root . --input config=tests/config.yaml
+typst compile tests/test_lib.typ --root .
 ```
 
 or with
