@@ -1,6 +1,6 @@
 
-// joinPath joins the arguments to a valid system path.
-#let joinPath(..parts) = {
+// join-path joins the arguments to a valid system path.
+#let join-path(..parts) = {
   let path = ""
   let pathSeparator = "/"
   for part in parts.pos() {

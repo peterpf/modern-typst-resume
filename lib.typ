@@ -1,4 +1,4 @@
-#import "utils.typ": joinPath
+#import "utils.typ": join-path
 #let page-margin = 16pt
 
 #let text-size = (
@@ -32,7 +32,7 @@
   height: 1.0em,
   width: 1.25em) = {
     let svgFilename = name + ".svg"
-    let svgFilepath = joinPath(assets.icons, svgFilename)
+    let svgFilepath = join-path(assets.icons, svgFilename)
     let originalImage = read(svgFilepath)
     let colorizedImage = originalImage.replace(
       "#ffffff",
@@ -46,13 +46,13 @@
     )
 }
 
-// infoItem returns a content element with an icon followed by text.
-#let infoItem(iconName, msg, theme: default-theme) = {
-  text(theme.textMuted, [#icon(iconName, baseline: 0.25em) #msg])
+// info-item returns a content element with an icon followed by text.
+#let info-item(icon-name, msg, theme: default-theme) = {
+  text(theme.textMuted, [#icon(icon-name, baseline: 0.25em) #msg])
 }
 
-// circularAvatarImage returns a rounded image with a border.
-#let circularAvatarImage(img, theme: default-theme) = {
+// circular-avatar-image returns a rounded image with a border.
+#let circular-avatar-image(img, theme: default-theme) = {
   block(
     radius: 50%,
     clip: true,
@@ -72,17 +72,17 @@
       #text(theme.textMuted, bio)
     ],
     if avatar != none {
-      circularAvatarImage(avatar, theme: theme)
+      circular-avatar-image(avatar, theme: theme)
     }
   )
 }
 
-// contactDetails returns a grid element with neatly organized contact details.
-#let contactDetails(contactOptionsDict, theme: default-theme) = {
-  if contactOptionsDict.len() == 0 {
+// contact-details returns a grid element with neatly organized contact details.
+#let contact-details(contact-options-dict, theme: default-theme) = {
+  if contact-options-dict.len() == 0 {
     return
   }
-  let contactOptionKeyToIconMap = (
+  let contact-option-key-to-icon-map = (
     linkedin: "linkedin",
     email: "envelope",
     github: "github",
@@ -92,25 +92,25 @@
   )
 
   // Evenly distribute the contact options among two columns.
-  let contactOptionDictPairs = contactOptionsDict.pairs()
-  let midIndex = calc.ceil(contactOptionsDict.len() / 2)
-  let firstColumnContactOptionsDictPairs = contactOptionDictPairs.slice(0, midIndex)
-  let secondColumnContactOptionsDictPairs = contactOptionDictPairs.slice(midIndex)
+  let contact-option-dict-pairs = contact-options-dict.pairs()
+  let mid-index = calc.ceil(contact-options-dict.len() / 2)
+  let first-column-contact-options-dict-pairs = contact-option-dict-pairs.slice(0, mid-index)
+  let second-column-contact-options-dict-pairs = contact-option-dict-pairs.slice(mid-index)
 
-  let renderContactOptions(contactOptionDictPairs) = [
-    #for (key, value) in contactOptionDictPairs [
-        #infoItem(contactOptionKeyToIconMap.at(key), value, theme: theme)\
+  let render-contact-options(contact-option-dict-pairs) = [
+    #for (key, value) in contact-option-dict-pairs [
+        #info-item(contact-option-key-to-icon-map.at(key), value, theme: theme)\
       ]
   ]
 
   grid(
     columns: (.5fr, .5fr),
-    renderContactOptions(firstColumnContactOptionsDictPairs),
-    renderContactOptions(secondColumnContactOptionsDictPairs),
+    render-contact-options(first-column-contact-options-dict-pairs),
+    render-contact-options(second-column-contact-options-dict-pairs),
   )
 }
 
-#let headerRibbon(color, content) = {
+#let header-ribbon(color, content) = {
   block(
     width: 100%,
     fill: color,
@@ -128,11 +128,11 @@
   grid(
     columns: 1,
     rows: (auto, auto),
-    headerRibbon(
+    header-ribbon(
       theme.primary,
       headline(author, job-title, bio, avatar: avatar, theme: theme)
     ),
-    headerRibbon(theme.secondary, contactDetails(contact-options, theme: theme))
+    header-ribbon(theme.secondary, contact-details(contact-options, theme: theme))
   )
 }
 
@@ -249,14 +249,14 @@
   }
 
   // A typical icon for outbound links. Use for hyperlinks.
-  let linkIcon(..args) = {
+  let link-icon(..args) = {
     icon("arrow-up-right-from-square", ..args, width: 1.25em / 2, baseline: 0.125em * 3)
   }
 
   // Header
   {
     show link: it => [
-      #it #linkIcon()
+      #it #link-icon()
     ]
     header(author, job-title, bio: bio, avatar: avatar, contact-options: contact-options, theme: theme)
   }
@@ -264,7 +264,7 @@
   // Main content
   {
     show link: it => [
-      #it #linkIcon(color: theme.accentColor)
+      #it #link-icon(color: theme.accentColor)
     ]
     pad(
       left: page-margin,
