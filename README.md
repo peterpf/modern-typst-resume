@@ -40,7 +40,7 @@ typst watch main.typ
 The following code provides a minimum working example:
 
 ```typst
-#import "@preview/modern-resume": *
+#import "@preview/modern-resume:1.0.0": *
 
 #show: modern-resume.with(
   author: "John Doe",           // Optional parameter
@@ -90,9 +90,9 @@ See [main.typ](./main.typ) for a full example that showcases all available eleme
 
 Example outputs for different color palettes:
 
-| Default colors | Pink colors |
-|:----------------:|:-------------:|
-|![Default colors](./docs/images/demo-navy-dark.png) | ![Pink colors](./docs/images/demo-pink.png)|
+|                   Default colors                    |                 Pink colors                 |
+| :-------------------------------------------------: | :-----------------------------------------: |
+| ![Default colors](./docs/images/demo-navy-dark.png) | ![Pink colors](./docs/images/demo-pink.png) |
 
 
 ## Customization
@@ -101,6 +101,7 @@ The template allows you to make it yours by defining a custom color palette.
 You can create and pass your own theme dictionary to the `modern-resume` function:
 
 ```typst
+// Define a custom theme once
 #let custom-theme = (
   primary: rgb("#ffc0cb"),      // Pink background for header
   secondary: rgb("#222A33"),    // Dark background for contact info
@@ -110,13 +111,28 @@ You can create and pass your own theme dictionary to the `modern-resume` functio
   textMuted: rgb("#ffffff"),    // Text color for elements on dark background
 )
 
+// Use it in the main resume function
 #show: modern-resume.with(
   // ... other parameters
   theme: custom-theme,
 )
+
+// And reuse it in individual components for consistency
+#experience(
+  // ... parameters
+  theme: custom-theme,
+)
+
+#project(
+  // ... parameters
+  theme: custom-theme,
+)
+
+#pill("Skill", theme: custom-theme)
 ```
 
 If you don't specify a theme, the default theme will be used.
+All components accept a `theme` parameter that allows you to customize their appearance.
 
 ## Elements
 
@@ -131,6 +147,9 @@ Import this element from the template module with `pill`.
 ```typst
 #pill("German (native)")
 #pill("English (C1)")
+
+// With custom theme
+#pill("German (native)", theme: custom-theme)
 ```
 
 ![pills filled](docs/images/pills-filled.png)
@@ -138,6 +157,9 @@ Import this element from the template module with `pill`.
 ```typst
 #pill("Teamwork", fill: true)
 #pill("Critical thinking", fill: true)
+
+// With custom theme
+#pill("Problem solving", fill: true, theme: custom-theme)
 ```
 
 ### Experience
@@ -158,6 +180,20 @@ Import the experience element from the template module with `experience`.
   date-to: "07/2023",
   label: "Courses",
 )
+
+// With custom theme
+#experience(
+  title: "Master's degree",
+  subtitle: "University of Sciences",
+  task-description: [
+    - Short summary of the most important courses
+    - Explanation of master thesis topic
+  ],
+  date-from: "10/2021",
+  date-to: "07/2023",
+  label: "Courses",
+  theme: custom-theme,
+)
 ```
 
 ![work experience](docs/images/work-experience.png)
@@ -173,6 +209,20 @@ Import the experience element from the template module with `experience`.
   date-from: "09/2018",
   date-to: "07/2021",
   label: "Achievements/Tasks",
+)
+
+// With custom theme
+#experience(
+  title: "Full Stack Software Engineer",
+  subtitle: [#link("https://www.google.com")[Some IT Company]],
+  facility-description: "Company operating in sector XY",
+  task-description: [
+    - Short summary of your responsibilities
+  ],
+  date-from: "09/2018",
+  date-to: "07/2021",
+  label: "Achievements/Tasks",
+  theme: custom-theme,
 )
 ```
 
@@ -192,6 +242,18 @@ Import this element from the template module with `project`.
   ],
   date-from: "08/2022",
   date-to: "09/2022",
+)
+
+// With custom theme
+#project(
+  title: "Project 2",
+  subtitle: "Data Visualization, Data Engineering",
+  description: [
+    - #lorem(20)
+  ],
+  date-from: "08/2022",
+  date-to: "09/2022",
+  theme: custom-theme,
 )
 ```
 
