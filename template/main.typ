@@ -1,4 +1,4 @@
-#import "@preview/modern-resume:0.1.0": modern-resume, experience, project, pill
+#import "@preview/modern-resume:1.0.0": modern-resume, experience, project, pill
 
 #let custom-theme = (
   primary: rgb("#313C4E"),
